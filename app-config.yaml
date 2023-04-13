@@ -3,7 +3,7 @@ app:
   baseUrl: http://localhost:3000
 
 organization:
-  name: My Company
+  name: VascoMouta
 
 backend:
   # Used for enabling authentication, secret is shared by all backend plugins
@@ -28,8 +28,17 @@ backend:
   # This is for local development only, it is not recommended to use this in production
   # The production database configuration is stored in app-config.production.yaml
   database:
-    client: better-sqlite3
-    connection: ':memory:'
+    # config options: https://node-postgres.com/apis/client
+    client: pg
+    connection:
+      host: 127.0.0.1
+      port: 5432
+      user: postgres
+      password: vascomouta
+      # https://node-postgres.com/features/ssl
+      # ssl: require # see https://www.postgresql.org/docs/current/libpq-ssl.html Table 33.1. SSL Mode Descriptions (e.g. require)
+        #ca: # if you have a CA file and want to verify it you can uncomment this section
+        #$file: <file-path>/ca/server.crt
   cache:
     store: memory
   # workingDirectory: /tmp # Use this to configure a working directory for the scaffolder, defaults to the OS temp-dir
@@ -39,7 +48,7 @@ integrations:
     - host: github.com
       # This is a Personal Access Token or PAT from GitHub. You can find out how to generate this token, and more information
       # about setting up the GitHub integration here: https://backstage.io/docs/getting-started/configuration#setting-up-a-github-integration
-      token: ${GITHUB_TOKEN}
+      token: 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
     ### Example for how to add your GitHub Enterprise instance using the API:
     # - host: ghe.example.net
     #   apiBaseUrl: https://ghe.example.net/api/v3
@@ -65,7 +74,12 @@ techdocs:
 
 auth:
   # see https://backstage.io/docs/auth/ to learn about auth providers
-  providers: {}
+  environment: development
+  providers:
+    github:
+      development:
+        clientId: 2d5db8ed6d7b5eecc861
+        clientSecret: e2a8450236049c4b187534449e228bc13f15fa6c
 
 scaffolder:
   # see https://backstage.io/docs/features/software-templates/configuration for software template options
