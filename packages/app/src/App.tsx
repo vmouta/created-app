@@ -35,9 +35,24 @@ import { RequirePermission } from '@backstage/plugin-permission-react';
 import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/alpha';
 import { githubAuthApiRef } from '@backstage/core-plugin-api';
 import { SignInPage } from '@backstage/core-components';
+import { ThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import LightIcon from '@material-ui/icons/WbSunny';
+import { vascoTheme } from './themes/vasco/VascoTheme';
 
 const app = createApp({
   apis,
+  themes: [{
+    id: 'vasco-theme',
+    title: 'Vasco Theme',
+    variant: 'light',
+    icon: <LightIcon />,
+    Provider: ({ children }) => (
+      <ThemeProvider theme={vascoTheme}>
+        <CssBaseline>{children}</CssBaseline>
+      </ThemeProvider>
+    ),
+  }],
   components: {
     SignInPage: props => (
       <SignInPage
